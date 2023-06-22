@@ -8,6 +8,7 @@ import {
   Delete,
   Version,
 } from '@nestjs/common';
+import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -26,12 +27,14 @@ export class UserController {
   }
 
   @Get()
+  @Throttle(1, 10)
   findAll() {
     return this.userService.findAll();
   }
 
   @Get()
   @Version('1')
+  @SkipThrottle()
   findAll2() {
     throw BusinessException.throwVersionNotSupport();
   }
