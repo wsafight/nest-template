@@ -10,9 +10,11 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { AllExceptionsFilter } from './common/exceptions/base.exception.filter';
 import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
 import { AppModule } from './app.module';
+import { ClsMiddleware } from 'nestjs-cls';
 
 /** 默认配置 3000 端口 */
 const API_DEFAULT_PORT = 3000;
+
 /** 默认配置请求前缀 */
 const API_DEFAULT_PREFIX = '/api';
 
@@ -41,6 +43,9 @@ async function bootstrap() {
 
   // 设置全局返回
   app.useGlobalInterceptors(new TransformInterceptor());
+
+  // 在 bootstrap 中挂载，因为中间件可能安装得太晚
+  app.use(new ClsMiddleware({ useEnterWith: false }).use);
 
   // 抛出错误
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());

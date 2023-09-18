@@ -32,7 +32,8 @@
     "rxjs": "^7.8.1",
     "@fastify/helmet": "^10.1.1",
     "@fastify/compress": "^6.4.0",
-    "@nestjs/throttler": "4.1.0"
+    "@nestjs/throttler": "4.1.0",
+    "nestjs-cls": "3.5.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
